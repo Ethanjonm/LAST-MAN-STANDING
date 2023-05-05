@@ -13,7 +13,11 @@ In addition, this project will include:
 
 
 Friday Afternoon & Weekend I want to have my targets rendered and to be able to click them to disappear
+
 Monday I want to be able to make the score go up by one when target is clicked
+
 Tuesday I will add a timer and a gamer over screen
+
 Wednesday I will make the start and restart button and some css
+
 Thursday Morning I would like to finish the css
