@@ -11,3 +11,5 @@ class Example {
         this.htmlElement.children[0].innerText = "Ouch"
     }
 }
+
+export default Example;
