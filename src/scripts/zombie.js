@@ -1,11 +1,10 @@
-
-class Player {
-    constructor(x, y, radius,velocity, color, ctx) {
+class Zombie {
+    constructor(x, y, radius, color, speed, ctx) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color;
-        this.velocity = velocity
+        this.speed = speed;
         this.ctx = ctx;
     }
 
@@ -18,11 +17,11 @@ class Player {
 
     update() {
         this.draw()
-        this.x += this.velocity[0]
-        this.y += this.velocity[1]
+        this.x = this.x + this.speed[0]
+        this.y = this.y + this.speed[1]
     }
 
-    
 }
 
-export default Player;
+
+export default Zombie;
