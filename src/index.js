@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctx = canvas.getContext("2d");
 
     canvas.width = 800;
-    canvas.height = 800;
+    canvas.height = 500;
         
     canvas.style.background = "#00BFFF";
 
@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.clearRect(0,0, canvas.width, canvas.height);
         // player.draw();
         player.update()
+        // console.log(player.y)
         lasers.forEach((laser, index) => {
             laser.update()
             // remove from edges of screen
@@ -59,6 +60,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     }, 0)
             }
         })
+
+        if (player.x - canvas.width === 0 || 
+            player.y - canvas.height === 0 ||
+            player.x === 0 ||
+            player.y === 0) {
+            cancelAnimationFrame(animationId) // game end
+        }
         zombies.forEach((zombie, index) => {
             zombie.update()
 
@@ -95,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addEventListener("click", (event) => {
         // console.log(lasers)
         const angle = Math.atan2(event.clientY - player.y, event.clientX - player.x);
-        const velocity = [Math.cos(angle), Math.sin(angle)];
+        const velocity = [Math.cos(angle) * 4, Math.sin(angle) * 4]; // shot speed
 
         lasers.push(new Laser(player.x,player.y, 5, "Black", velocity,ctx));
     })
@@ -152,13 +160,14 @@ document.addEventListener("DOMContentLoaded", () => {
             // y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius
             const color = "green"
             const angle = Math.atan2(player.y - y, player.x - x);
-            const velocity = [Math.cos(angle), Math.sin(angle)];
+            const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // zombie speed
             zombies.push(new Zombie(x, y, radius, color, velocity, ctx))
             // console.log(zombies.length)
         }, 1000)
     }
     
     animate();
-    spawnZombie();
+    // spawnZombie();
+
 })  
 
