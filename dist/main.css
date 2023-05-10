@@ -21,3 +21,20 @@ time, mark, audio, video {
   font: inherit;
   vertical-align: baseline;
 }
+
+.scoreDiv {
+  display: flex;
+}
+
+.restart {
+  display: flex;
+  inset: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}

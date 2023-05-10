@@ -9,11 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
-    canvas.width = 800;
-    canvas.height = 500;
-        
+    //innerWidth
+    //innerHeight
+
+    canvas.width = 750;
+    canvas.height = 550;
+    
     canvas.style.background = "#00BFFF";
 
+    const scoring = document.getElementById("score")
     const x = canvas.width / 2;
     const y = canvas.height / 2;
 
@@ -31,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lasers = [];
     const zombies = [];
     let animationId = 0;
+    let score = 0
     
     function animate() {
         animationId = requestAnimationFrame(animate)
@@ -55,7 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
             player.y - canvas.height === 0 ||
             player.x === 0 ||
             player.y === 0) {
-            cancelAnimationFrame(animationId) // game end
+            cancelAnimationFrame(animationId)
+            //game end if player touch edge
         }
         zombies.forEach((zombie, index) => {
             zombie.update()
@@ -67,22 +73,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => {
                     zombies.splice(index, 1) 
                     }, 0)
+                    //remove zombies from game if out of canvas
             }
 
             const distP = Math.hypot(player.x - zombie.x, player.y - zombie.y)
 
 
             if (distP - zombie.radius - player.radius < 1) {
-                cancelAnimationFrame(animationId) //end game
+                cancelAnimationFrame(animationId) 
+                //end game if player touch zombie
             }
                 
             lasers.forEach((laser, laserIdx) => {
                 const distL = Math.hypot(laser.x - zombie.x, laser.y - zombie.y)
-
+                
                 if (distL - zombie.radius - laser.radius < 1) {
                     setTimeout(() => {
                     zombies.splice(index, 1)
-                    lasers.splice(laserIdx, 1) 
+                    lasers.splice(laserIdx, 1)
+                    score += 100
+                    scoring.innerHTML = score
+                    // console.log(score)
                     }, 0)
                     
                 }
@@ -91,12 +102,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     addEventListener("click", (event) => {
-        // console.log(lasers)
-        const angle = Math.atan2(event.clientY - player.y, event.clientX - player.x);
+        // Get the bounding rectangle of the canvas
+        const canvasRect = document.getElementById('canvas').getBoundingClientRect();
+    
+        // Adjust the click coordinates to be relative to the canvas
+        const canvasX = event.clientX - canvasRect.left;
+        const canvasY = event.clientY - canvasRect.top;
+    
+        // Calculate the angle
+        const angle = Math.atan2(canvasY - player.y, canvasX - player.x);
+    
         const velocity = [Math.cos(angle) * 4, Math.sin(angle) * 4]; // shot speed
-
-        lasers.push(new Laser(player.x,player.y, 5, "Black", velocity,ctx));
-    })
+    
+        lasers.push(new Laser(player.x, player.y, 5, "Black", velocity, ctx));
+    });
 
     addEventListener("keydown", ({ key }) => {
         switch (key) {
