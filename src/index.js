@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
+    const scoring = document.getElementById("score")
+    const startGame = document.getElementById("startGame")
 
     //innerWidth
     //innerHeight
@@ -17,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     canvas.style.background = "#00BFFF";
 
-    const scoring = document.getElementById("score")
     const x = canvas.width / 2;
     const y = canvas.height / 2;
 
@@ -112,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Calculate the angle
         const angle = Math.atan2(canvasY - player.y, canvasX - player.x);
     
-        const velocity = [Math.cos(angle) * 4, Math.sin(angle) * 4]; // shot speed
+        const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // shot speed
     
         lasers.push(new Laser(player.x, player.y, 5, "Black", velocity, ctx));
     });
@@ -175,8 +176,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000)
     }
     
-    animate();
-    spawnZombie();
+    startGame.addEventListener("click", () => {
+        animate();
+        spawnZombie();
+        startGame.style.display = "none"
+    })
+
+    // animate();
+    // spawnZombie();
 
 })  
 

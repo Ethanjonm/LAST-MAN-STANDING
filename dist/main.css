@@ -22,19 +22,27 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-.scoreDiv {
-  display: flex;
-}
-
-.restart {
-  display: flex;
-  inset: 0;
-}
-
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
+}
+
+.container {
+  position: relative;
+}
+
+#canvas {
+  border: 1px solid black;
+}
+
+.scoreDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  z-index: 1;
 }
