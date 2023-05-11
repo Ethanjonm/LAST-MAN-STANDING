@@ -25,6 +25,8 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    background-color: black;
+
 }
 
 .title {
@@ -34,7 +36,8 @@ body {
 
 .container {
     position: relative;
-    display: none;  /* initially hide the game screen */
+    display: none;  // initially hide the game screen 
+
 }
 
 #canvas {

@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 laser.y + laser.radius < 0 ||
                 laser.y - laser.radius > canvas.height) {
                 setTimeout(() => {
-                    lasers.splice(index, 1) 
+                    lasers.splice(index, 1) // remove laser when leave canvas
                     }, 0)
             }
         })
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     bgImage.onload = function() {
-        // Image has loaded, now we can start the animation
+        // On image load start the animation
         animate();
     };
 
