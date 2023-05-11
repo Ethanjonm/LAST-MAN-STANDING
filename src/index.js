@@ -176,11 +176,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000)
     }
     
-    startGame.addEventListener("click", () => {
+    // startGame.addEventListener("click", () => {
+    //     animate();
+    //     spawnZombie();
+    //     startGame.style.display = "none"
+    // })
+
+    document.getElementById('startGame').addEventListener('click', function() {
+        document.getElementById('startScreen').style.display = 'none';  /* hide the start screen */
+        document.querySelector('.container').style.display = 'block';  /* show the game screen */
         animate();
         spawnZombie();
-        startGame.style.display = "none"
-    })
+    });
 
     // animate();
     // spawnZombie();

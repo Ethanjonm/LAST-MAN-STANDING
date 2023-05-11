@@ -30,12 +30,19 @@ body {
   margin: 0;
 }
 
+.title {
+  color: red;
+  font-size: 3em;
+}
+
 .container {
   position: relative;
+  display: none; /* initially hide the game screen */
 }
 
 #canvas {
   border: 1px solid black;
+  background-image: image("");
 }
 
 .scoreDiv {
@@ -45,4 +52,25 @@ body {
   background: rgba(255, 255, 255, 0.8);
   padding: 10px;
   z-index: 1;
+}
+
+#startScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* semi-transparent background */
+  color: #fff; /* white text */
+  z-index: 2; /* ensure the start screen is on top of everything */
+}
+
+#startScreen img {
+  width: 1000px; /* adjust as needed */
+  height: auto; /* keeps the aspect ratio */
+  margin-bottom: 20px; /* space between the image and the button */
 }
