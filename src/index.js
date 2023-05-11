@@ -42,23 +42,24 @@ document.addEventListener("DOMContentLoaded", () => {
     let animationId = 0;
     let zombieSpawnInterval = 0
 
-        // Function to initialize the game state
     function init() {
+        if (zombieSpawnInterval) clearInterval(zombieSpawnInterval);
+    
         zombies = [];
         lasers = [];
         score = 0;
         scoring.innerHTML = score; // Update score display
-
+    
         player = new Player(x, y, 15, [0, 0], "Red", ctx); // Reset player position and velocity
-
-        // Clear any ongoing animations and zombie spawning intervals
+    
+        // Clear any ongoing animations
         if (animationId) cancelAnimationFrame(animationId);
-        if (zombieSpawnInterval) clearInterval(zombieSpawnInterval);
-
+    
         // Start animations and zombie spawning
         animate();
-        zombieSpawnInterval = spawnZombie();
+        spawnZombie();
     }
+    
 
     function animate() {
         animationId = requestAnimationFrame(animate)
@@ -179,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     function spawnZombie() {
-        setInterval(() => {
+        zombieSpawnInterval = setInterval(() => {
             const radius = 25
             let x = 0
             let y = 0
@@ -190,33 +191,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 x = Math.random() * canvas.width;
                 y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius
             }
-            // x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius
-            // y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius
             const color = "green"
             const angle = Math.atan2(player.y - y, player.x - x);
             const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // zombie speed
             zombies.push(new Zombie(x, y, radius, color, velocity, ctx))
-            // console.log(zombies.length)
-        }, 1000)
+        }, 1000);
     }
+    
 
     document.getElementById('startGame').addEventListener('click', function() {
-        document.getElementById('startScreen').style.display = 'none';  /* hide the start screen */
-        document.querySelector('.container').style.display = 'block';  /* show the game screen */
-        init();  /* initialize game state */
+        document.getElementById('startScreen').style.display = 'none';  // hide the start screen
+        document.querySelector('.container').style.display = 'block';  // show the game screen
+        init();  //game start
     });
 
 
     // Show game over screen
     function gameOver() {
-    finalScore.textContent = score; // Assume `score` is your game's score variable
+    finalScore.textContent = score; // score is the game score variable
     gameOverScreen.style.display = "block";
     }
 
     // Restart game and hide game over screen
     restartGame.addEventListener("click", () => {
         gameOverScreen.style.display = "none";
-        init();  /* initialize game state */
+        init(); 
     });
 
     // animate();
