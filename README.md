@@ -3,12 +3,10 @@
 ---
 <h1>Background:</h1>
 
----
 LAST MAN STANDING is a 2d top down game where you play as the last survivor trying to get as many points as possible before you lose by the enemy touching you are you touch the edge of the map. You use your mouse to aim and shoot at the endless enemys that will come at you from random directions. At the end of your game you will be able to restart right away with out any delay.
 
 <h1>Functionality & MVPs:</h1>
 
----
 <h2>Players will be able to:</h2>
 <ul>
 <li>Move in any direction using wasd</li>
@@ -17,18 +15,7 @@ LAST MAN STANDING is a 2d top down game where you play as the last survivor tryi
 <li>Be able to restart the game quickly by pressing the play again button</li>
 </ul>
 
----
-
-<h2>In addition, this project will include:</h2>
-<ul>
-<li>an opening screen with instructions<li>
-</ul>
-
----
-
 <h1>Technologies, Libraries, APIs:</h1>
-
----
 
 <h2>This project will use:</h2>
 
