@@ -14,11 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const finalScore = document.getElementById("finalScore");
     const restartGame = document.getElementById("restartGame");
 
+
+
     //innerWidth
     //innerHeight
 
-    canvas.width = 750;
-    canvas.height = 550;
+    canvas.width = 900;
+    canvas.height = 650;
     
     canvas.style.background = "#00BFFF";
 
@@ -36,11 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
         [1,1], 
         ctx)
 
+    
     let lasers = [];
     let zombies = [];
     let score = 0
     let animationId = 0;
     let zombieSpawnInterval = 0
+    let bgImage = new Image();
+    bgImage.src = "assets/tilemap.png";
+
 
     function init() {
         if (zombieSpawnInterval) clearInterval(zombieSpawnInterval);
@@ -50,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         score = 0;
         scoring.innerHTML = score; // Update score display
     
-        player = new Player(x, y, 15, [0, 0], "Red", ctx); // Reset player position and velocity
+        player = new Player(x, y, 30, [0, 0], "Red", ctx); // Reset player position and velocity
     
         // Clear any ongoing animations
         if (animationId) cancelAnimationFrame(animationId);
@@ -64,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function animate() {
         animationId = requestAnimationFrame(animate)
         ctx.clearRect(0,0, canvas.width, canvas.height);
+        ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
         // player.draw();
         player.update()
         // console.log(player.y)
@@ -140,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
         const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // shot speed
     
-        lasers.push(new Laser(player.x, player.y, 5, "Black", velocity, ctx));
+        lasers.push(new Laser(player.x, player.y, 8, "Yellow", velocity, ctx));
     });
 
     addEventListener("keydown", ({ key }) => {
@@ -181,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function spawnZombie() {
         zombieSpawnInterval = setInterval(() => {
-            const radius = 25
+            const radius = 40
             let x = 0
             let y = 0
             if (Math.random() < 0.5) {
@@ -217,6 +224,11 @@ document.addEventListener("DOMContentLoaded", () => {
         gameOverScreen.style.display = "none";
         init(); 
     });
+
+    bgImage.onload = function() {
+        // Image has loaded, now we can start the animation
+        animate();
+    };
 
     // animate();
     // spawnZombie();

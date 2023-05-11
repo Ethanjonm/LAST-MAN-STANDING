@@ -7,13 +7,12 @@ class Player {
         this.color = color;
         this.velocity = velocity
         this.ctx = ctx;
+        this.image = new Image();
+        this.image.src = "assets/player.png";
     }
 
     draw() {
-        this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        this.ctx.fillStyle = this.color;
-        this.ctx.fill();
+        this.ctx.drawImage(this.image, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
     }
 
     update() {
