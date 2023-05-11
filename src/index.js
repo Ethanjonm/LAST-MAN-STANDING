@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctx = canvas.getContext("2d");
     const scoring = document.getElementById("score")
     const startGame = document.getElementById("startGame")
+    const gameOverScreen = document.getElementById("gameOverScreen");
+    const finalScore = document.getElementById("finalScore");
+    const restartGame = document.getElementById("restartGame");
 
     //innerWidth
     //innerHeight
@@ -22,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const x = canvas.width / 2;
     const y = canvas.height / 2;
 
-    const player = new Player(x, y, 15,[0,0], "Red", ctx);
+    let player = new Player(x, y, 15,[0,0], "Red", ctx);
 
 
-    const laser = new Laser(
+    let laser = new Laser(
         player.x, 
         player.y, 
         5, 
@@ -33,11 +36,30 @@ document.addEventListener("DOMContentLoaded", () => {
         [1,1], 
         ctx)
 
-    const lasers = [];
-    const zombies = [];
-    let animationId = 0;
+    let lasers = [];
+    let zombies = [];
     let score = 0
-    
+    let animationId = 0;
+    let zombieSpawnInterval = 0
+
+        // Function to initialize the game state
+    function init() {
+        zombies = [];
+        lasers = [];
+        score = 0;
+        scoring.innerHTML = score; // Update score display
+
+        player = new Player(x, y, 15, [0, 0], "Red", ctx); // Reset player position and velocity
+
+        // Clear any ongoing animations and zombie spawning intervals
+        if (animationId) cancelAnimationFrame(animationId);
+        if (zombieSpawnInterval) clearInterval(zombieSpawnInterval);
+
+        // Start animations and zombie spawning
+        animate();
+        zombieSpawnInterval = spawnZombie();
+    }
+
     function animate() {
         animationId = requestAnimationFrame(animate)
         ctx.clearRect(0,0, canvas.width, canvas.height);
@@ -62,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             player.x === 0 ||
             player.y === 0) {
             cancelAnimationFrame(animationId)
+            gameOver()
             //game end if player touch edge
         }
         zombies.forEach((zombie, index) => {
@@ -81,7 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             if (distP - zombie.radius - player.radius < 1) {
-                cancelAnimationFrame(animationId) 
+                cancelAnimationFrame(animationId)
+                gameOver() 
                 //end game if player touch zombie
             }
                 
@@ -175,18 +199,24 @@ document.addEventListener("DOMContentLoaded", () => {
             // console.log(zombies.length)
         }, 1000)
     }
-    
-    // startGame.addEventListener("click", () => {
-    //     animate();
-    //     spawnZombie();
-    //     startGame.style.display = "none"
-    // })
 
     document.getElementById('startGame').addEventListener('click', function() {
         document.getElementById('startScreen').style.display = 'none';  /* hide the start screen */
         document.querySelector('.container').style.display = 'block';  /* show the game screen */
-        animate();
-        spawnZombie();
+        init();  /* initialize game state */
+    });
+
+
+    // Show game over screen
+    function gameOver() {
+    finalScore.textContent = score; // Assume `score` is your game's score variable
+    gameOverScreen.style.display = "block";
+    }
+
+    // Restart game and hide game over screen
+    restartGame.addEventListener("click", () => {
+        gameOverScreen.style.display = "none";
+        init();  /* initialize game state */
     });
 
     // animate();
