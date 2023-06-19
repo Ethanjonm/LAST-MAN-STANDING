@@ -64,6 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Start animations and zombie spawning
         animate();
         spawnZombie();
+        spawnZombie();
+        spawnZombie();
+        spawnZombie();
     }
     
 
