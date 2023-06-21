@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let zombieSpawnInterval = 0
     let bgImage = new Image();
     bgImage.src = "assets/tilemap.png";
+    let gameStarted = false;
 
 
     function init() {
@@ -62,11 +63,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (animationId) cancelAnimationFrame(animationId);
     
         // Start animations and zombie spawning
-        animate();
+        animate(); //npm run watch to start game
         spawnZombie();
-        spawnZombie();
-        spawnZombie();
-        spawnZombie();
+    
+        // Set game started flag to true
+        gameStarted = true;
     }
     
 
@@ -138,6 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     addEventListener("click", (event) => {
+        if (!gameStarted) return; // Prevent shooting if the game hasn't started
+
         // Get the bounding rectangle of the canvas
         const canvasRect = document.getElementById('canvas').getBoundingClientRect();
     
@@ -150,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
         const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // shot speed
     
-        lasers.push(new Laser(player.x, player.y, 8, "Yellow", velocity, ctx));
+        lasers.push(new Laser(player.x, player.y, 25, "Yellow", velocity, ctx)); // create laser 
     });
 
     addEventListener("keydown", ({ key }) => {
@@ -203,27 +206,33 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const color = "green"
             const angle = Math.atan2(player.y - y, player.x - x);
-            const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // zombie speed
+            const velocity = [Math.cos(angle) * 7, Math.sin(angle) * 7]; // zombie speed
             zombies.push(new Zombie(x, y, radius, color, velocity, ctx))
         }, 1000);
     }
     
 
     document.getElementById('startGame').addEventListener('click', function() {
+        event.stopPropagation();  // prevent laser before game start
         document.getElementById('startScreen').style.display = 'none';  // hide the start screen
         document.querySelector('.container').style.display = 'block';  // show the game screen
         init();  //game start
+        
     });
 
 
     // Show game over screen
     function gameOver() {
-    finalScore.textContent = score; // score is the game score variable
-    gameOverScreen.style.display = "block";
+        finalScore.textContent = score; // score is the game score variable
+        gameOverScreen.style.display = "block";
+
+        // Set game started flag to false
+        gameStarted = false;
     }
 
     // Restart game and hide game over screen
     restartGame.addEventListener("click", () => {
+        event.stopPropagation();  // prevent laser before game start
         gameOverScreen.style.display = "none";
         init(); 
     });
