@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let zombieSpawnInterval = 0
     let bgImage = new Image();
     bgImage.src = "assets/tilemap.png";
-    let gameStarted = false;
 
 
     function init() {
@@ -63,11 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (animationId) cancelAnimationFrame(animationId);
     
         // Start animations and zombie spawning
-        animate(); //npm run watch to start game
+        animate();
         spawnZombie();
-    
-        // Set game started flag to true
-        gameStarted = true;
+        spawnZombie();
+        spawnZombie();
+        spawnZombie();
     }
     
 
@@ -139,8 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     addEventListener("click", (event) => {
-        if (!gameStarted) return; // Prevent shooting if the game hasn't started
-
         // Get the bounding rectangle of the canvas
         const canvasRect = document.getElementById('canvas').getBoundingClientRect();
     
@@ -153,7 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
         const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // shot speed
     
-        lasers.push(new Laser(player.x, player.y, 20, "Yellow", velocity, ctx)); // create laser 
+
+        lasers.push(new Laser(player.x, player.y, 8, "Yellow", velocity, ctx));
     });
 
     addEventListener("keydown", ({ key }) => {
@@ -213,26 +211,20 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     document.getElementById('startGame').addEventListener('click', function() {
-        event.stopPropagation();  // prevent laser before game start
         document.getElementById('startScreen').style.display = 'none';  // hide the start screen
         document.querySelector('.container').style.display = 'block';  // show the game screen
         init();  //game start
-        
     });
 
 
     // Show game over screen
     function gameOver() {
-        finalScore.textContent = score; // score is the game score variable
-        gameOverScreen.style.display = "block";
-
-        // Set game started flag to false
-        gameStarted = false;
+    finalScore.textContent = score; // score is the game score variable
+    gameOverScreen.style.display = "block";
     }
 
     // Restart game and hide game over screen
     restartGame.addEventListener("click", () => {
-        event.stopPropagation();  // prevent laser before game start
         gameOverScreen.style.display = "none";
         init(); 
     });

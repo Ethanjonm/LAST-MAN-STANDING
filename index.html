@@ -14,29 +14,25 @@
   </head>
 
   <body>
-    <div id="button-container">
-        <button onclick="location.reload();" class="Instructions-button">Instructions</button>
-        <a href="https://github.com/Ethanjonm/LAST-MAN-STANDING" target="_blank" class="top-right-Gbutton">GitHub</a>
-        <a href="https://www.linkedin.com/in/ethan-mercado-31312717a/" target="_blank" class="top-right-Lbutton">LinkedIn</a>
-    </div>
     <div id="startScreen">
       <h1 class="title">LAST MAN STANDING</h1>
       <img src="assets/pixelForestCover.png" alt="cover">
       <button id="startGame">Game Start</button>
-    </div>
-    <div class="container">
+  </div>
+  <div class="container">
       <div class="scoreDiv">
           <span>Score: </span><span id="score">0</span>
       </div>
       <canvas id="canvas"></canvas>
+  </div>
+  <div id="gameOverScreen" class="modal">
+    <div class="modal-content">
+        <h1>Game Over!</h1>
+        <p>Your Score: <span id="finalScore"></span></p>
+        <button id="restartGame">Play Again</button>
     </div>
-    <div id="gameOverScreen" class="modal">
-      <div class="modal-content">
-          <h1 id="id-top-text">Game Over!</h1>
-          <p id="id-bottom-text">Your Score: <span id="finalScore"></span></p>
-          <button id="restartGame">Play Again</button>
-      </div>
-    </div>
+</div>
+  
   </body>
 
 </html>
