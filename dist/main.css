@@ -49,17 +49,10 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  background: black;
   padding: 10px;
   z-index: 1;
   color: red;
-  font-size: 25px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
 }
 
 #startScreen {
@@ -108,121 +101,11 @@ body {
 #button-container {
   position: absolute;
   right: 0;
-  bottom: 0;   /* replaced 'top: 0;' with 'bottom: 0;' */
-  display: flex;
-  flex-direction: column;
+  top: 0;
   z-index: 3;
 }
 
-
-#startGame{
-  display: inline-block;
-  padding: 15px 25px;
-  font-size: 24px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: none;
-  color: black;
-  background-color: red;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px darkred;
-}
-
-#startGame:hover {background-color: red}
-
-#startGame:active {
-  background-color: red;
-  box-shadow: 0 5px darkred;
-  transform: translateY(4px);
-}
-
-#restartGame{
-  display: inline-block;
-  padding: 15px 25px;
-  font-size: 24px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: none;
-  color: black;
-  background-color: red;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px darkred;
-}
-
-#restartGame:hover {background-color: red}
-
-#restartGame:active {
-  background-color: red;
-  box-shadow: 0 5px darkred;
-  transform: translateY(4px);
-}
-
-#id-top-text{
-  font-size: 36px;
-}
-
-#id-bottom-text{
-  font-size: 30px;
-}
-
-.Instructions-button{
-  background-color: black;
-  border: 2px solid red;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
-
-
-.Instructions-button:hover {
-  background-color: red;
-  color: white; 
-}
-
-.top-right-Gbutton{
-  background-color: black;
-  border: 2px solid green;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer; 
-}
-
-.top-right-Gbutton:hover {
-  background-color: green;
-  color: white; 
-}
-
-.top-right-Lbutton{
-  background-color: black;
-  border: 2px solid blue;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
-
-.top-right-Lbutton:hover{
-  background-color: blue;
-  color: white; 
+.top-right-button {
+  display: block;
+  margin: 5px;
 }

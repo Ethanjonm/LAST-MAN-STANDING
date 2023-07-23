@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
         const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // shot speed
     
-        lasers.push(new Laser(player.x, player.y, 25, "Yellow", velocity, ctx)); // create laser 
+        lasers.push(new Laser(player.x, player.y, 20, "Yellow", velocity, ctx)); // create laser 
     });
 
     addEventListener("keydown", ({ key }) => {
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const color = "green"
             const angle = Math.atan2(player.y - y, player.x - x);
-            const velocity = [Math.cos(angle) * 7, Math.sin(angle) * 7]; // zombie speed
+            const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // zombie speed
             zombies.push(new Zombie(x, y, radius, color, velocity, ctx))
         }, 1000);
     }
