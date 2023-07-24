@@ -1,3 +1,5 @@
+Play the Game  https://ethanjonm.github.io/LAST-MAN-STANDING/
+
 ![Cover](/assets/pixelForestCover.png)
 
 ---
