@@ -3,6 +3,7 @@
 import Player from "./scripts/player"
 import Laser from "./scripts/laser"
 import Zombie from "./scripts/zombie"
+import Boom from "./scripts/boom"
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -27,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const x = canvas.width / 2;
     const y = canvas.height / 2;
 
-    let player = new Player(x, y, 15,[0,0], "Red", ctx);
+    let player = new Player(x, y, 20,[0,0], "Red", ctx);
 
 
     let laser = new Laser(
@@ -41,11 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let lasers = [];
     let zombies = [];
+    let booms = [];
     let score = 0
     let animationId = 0;
     let zombieSpawnInterval = 0
     let bgImage = new Image();
     bgImage.src = "assets/tilemap.png";
+    let gameStarted = false;
 
 
     function init() {
@@ -56,17 +59,17 @@ document.addEventListener("DOMContentLoaded", () => {
         score = 0;
         scoring.innerHTML = score; // Update score display
     
-        player = new Player(x, y, 30, [0, 0], "Red", ctx); // Reset player position and velocity
+        player = new Player(x, y, 40, [0, 0], "Red", ctx); // Reset player position and velocity
     
         // Clear any ongoing animations
         if (animationId) cancelAnimationFrame(animationId);
     
         // Start animations and zombie spawning
-        animate();
+        animate(); //npm run watch to start game
         spawnZombie();
-        spawnZombie();
-        spawnZombie();
-        spawnZombie();
+    
+        // Set game started flag to true
+        gameStarted = true;
     }
     
 
@@ -74,9 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
         animationId = requestAnimationFrame(animate)
         ctx.clearRect(0,0, canvas.width, canvas.height);
         ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-        // player.draw();
+        
         player.update()
-        // console.log(player.y)
+
+        booms.forEach(boom => {
+            boom.draw();
+        });
+
         lasers.forEach((laser, index) => {
             laser.update()
             // remove from edges of screen
@@ -122,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
             lasers.forEach((laser, laserIdx) => {
                 const distL = Math.hypot(laser.x - zombie.x, laser.y - zombie.y)
-                
+                // zombie and laser collide score +100
                 if (distL - zombie.radius - laser.radius < 1) {
                     setTimeout(() => {
                     zombies.splice(index, 1)
@@ -131,6 +138,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     scoring.innerHTML = score
                     // console.log(score)
                     }, 0)
+
+                    const boom = new Boom(zombie.x, zombie.y, "red", ctx, 60);
+                    booms.push(boom);
+                    
+
+                    setTimeout(() => {
+                        booms.splice(booms.indexOf(boom), 1);
+                    }, 500);
                     
                 }
             })
@@ -138,6 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     addEventListener("click", (event) => {
+        if (!gameStarted) return; // Prevent shooting if the game hasn't started
+
         // Get the bounding rectangle of the canvas
         const canvasRect = document.getElementById('canvas').getBoundingClientRect();
     
@@ -148,10 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Calculate the angle
         const angle = Math.atan2(canvasY - player.y, canvasX - player.x);
     
-        const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // shot speed
+        const velocity = [Math.cos(angle) * 6, Math.sin(angle) * 6]; // shot speed
     
-
-        lasers.push(new Laser(player.x, player.y, 8, "Yellow", velocity, ctx));
+        lasers.push(new Laser(player.x, player.y, 20, "Yellow", velocity, ctx)); // create laser 
     });
 
     addEventListener("keydown", ({ key }) => {
@@ -204,27 +220,33 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const color = "green"
             const angle = Math.atan2(player.y - y, player.x - x);
-            const velocity = [Math.cos(angle) * 5, Math.sin(angle) * 5]; // zombie speed
+            const velocity = [Math.cos(angle) * 4, Math.sin(angle) * 4]; // zombie speed
             zombies.push(new Zombie(x, y, radius, color, velocity, ctx))
         }, 1000);
     }
     
 
     document.getElementById('startGame').addEventListener('click', function() {
+        event.stopPropagation();  // prevent laser before game start
         document.getElementById('startScreen').style.display = 'none';  // hide the start screen
         document.querySelector('.container').style.display = 'block';  // show the game screen
         init();  //game start
+        
     });
 
 
     // Show game over screen
     function gameOver() {
-    finalScore.textContent = score; // score is the game score variable
-    gameOverScreen.style.display = "block";
+        finalScore.textContent = score; // score is the game score variable
+        gameOverScreen.style.display = "block";
+
+        // Set game started flag to false
+        gameStarted = false;
     }
 
     // Restart game and hide game over screen
     restartGame.addEventListener("click", () => {
+        event.stopPropagation();  // prevent laser before game start
         gameOverScreen.style.display = "none";
         init(); 
     });
@@ -238,4 +260,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // spawnZombie();
 
 })  
-

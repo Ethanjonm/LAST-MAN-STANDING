@@ -8,7 +8,7 @@ class Player {
         this.velocity = velocity
         this.ctx = ctx;
         this.image = new Image();
-        this.image.src = "assets/player.png";
+        this.image.src = "assets/player2.png";
     }
 
     draw() {
